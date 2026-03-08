@@ -1,13 +1,12 @@
 const { EntitySchema } = require('typeorm');
 
 const Task = new EntitySchema({
-    name: "task",
+    name: "tasks",
     tableName: "tasks",
     columns: {
         id: {
             primary: true,
-            type: "int",
-            generated: "increment"
+            type: "varchar",
         },
         title: {
             type: "varchar",
@@ -20,13 +19,17 @@ const Task = new EntitySchema({
         is_completed: {
             type: "boolean",
             default: false
+        },
+        user_id: {
+            type: "varchar",
+            nullable: true
         }
     },
 
     relations: {
         user: {
             type: "many-to-one",
-            target: "User",
+            target: "users",
             joinColumn: {
                 name: "user_id"
             },

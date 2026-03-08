@@ -1,13 +1,12 @@
 const { EntitySchema } = require('typeorm');
 
 const User = new EntitySchema({
-    name: "username",
-    tableName: "user",
+    name: "users",
+    tableName: "users",
     columns: {
         id: {
             primary: true,
-            type: "int",
-            generated: "increment"
+            type: "varchar",
         },
         username: {
             type: "varchar",
