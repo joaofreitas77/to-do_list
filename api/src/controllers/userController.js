@@ -2,7 +2,7 @@ const {
     getUsersService,
     getUsersByIdService,
     postUsersService,
-
+    putUsersService,
 } = require("../services/userService")
 
 const getUsersController = async (req, res) => {
@@ -46,8 +46,25 @@ const postUsersController = async (req, res) => {
     }
 }
 
+const putUsersController = async (req, res) => {
+    try {
+        const { username, email, password } = req.body;
+        const updatedUser = await putUsersController(username, email, password)
+
+        return res.status(201).json(updatedUser)
+    } catch (error) {
+        if (error.message === "All fields are required.") {
+            return res.status(400).json({ message: error.message })
+        }
+
+        console.error(error)
+        return res.status(500).json({ message: "Internal server error" })
+    }
+}
+
 module.exports = {
     getUsersController,
     getUsersByIdController,
     postUsersController,
+    putUsersController,
 }

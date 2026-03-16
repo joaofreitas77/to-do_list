@@ -36,13 +36,39 @@ const postUsersService = async (username, email, password) => {
         throw new Error("User already exists")
     }
 
-    const newUser = userRepository.create({ username, email, password })
+    const { v4: uuidv4 } = require("uuid");
+
+    const newUser = userRepository.create({
+        id: uuidv4(),
+        username,
+        email,
+        password
+    });
     await userRepository.save(newUser)
     return newUser
+}
+
+const putUsersService = async (id, username, email, password) => {
+    const user = await userRepository.findOne({ where: { id: Number(id) } })
+
+    if (!user) {
+        return null;
+    }
+    if (!username || !email || !password) {
+        throw new Error("All fields are required.")
+    }
+    if (username) {
+        user.username = username.toLowerCase()
+    }
+    if (email || password) {
+        username.email = email
+        username.password = password
+    }
 }
 
 module.exports = {
     getUsersService,
     getUsersByIdService,
-    postUsersService
+    postUsersService,
+    putUsersService,
 }

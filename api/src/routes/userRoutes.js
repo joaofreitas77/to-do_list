@@ -2,6 +2,7 @@ const {
     getUsersController,
     getUsersByIdController,
     postUsersController,
+    putUsersController,
 
 } = require("../controllers/userController")
 
@@ -12,4 +13,6 @@ module.exports = (app) => {
     app.get("/users/:id", getUsersByIdController)
     //criando usuarios com post
     app.post("/users", postUsersController)
+    //editando usuarios com put
+    app.put("/users/:id", putUsersController)
 }
